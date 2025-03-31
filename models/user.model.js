@@ -4,10 +4,11 @@ const userSchema = new mongoose.Schema(
   {
     userName: {
       type: String,
-      minlength: 3,
+      minlength: 2,
       maxlength: 30,
       required: true,
       trim: true,
+      unique: true,
     },
     email: {
       type: String,
@@ -26,16 +27,36 @@ const userSchema = new mongoose.Schema(
     upiId: {
       type: String,
       unique: true,
-      sparse: true,
+      required: true,
+    },
+    isVerified: {
+      type: Boolean,
+      required: true,
+      default: false,
     },
     gameProgress: {
       roundsPlayed: { type: Number, default: 0 },
       matchesPlayed: { type: Number, default: 0 },
       roundsWon: { type: Number, default: 0 },
       roundsLost: { type: Number, default: 0 },
-      winAmount: { type: Number, default: 0 },
+      winAmount: { type: Number, default: 30 },
       amountLost: { type: Number, default: 0 },
     },
+    tranxHistory: [
+      {
+        tranxNumber: {
+          type: Number,
+          default: 0,
+        },
+        text: {
+          type: String,
+        },
+        lossProfit: {
+          type: String,
+          enum: ["loss", "profit"],
+        },
+      },
+    ],
   },
   {
     timestamps: true,

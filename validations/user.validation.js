@@ -5,6 +5,7 @@ const validateRegisterInput = (input) => {
     userName: Joi.string().max(50),
     password: Joi.string().max(255).required().min(8),
     email: Joi.string().max(255).required().email(),
+    upiId: Joi.string().required(),
   });
 
   return schema.validate(input);
