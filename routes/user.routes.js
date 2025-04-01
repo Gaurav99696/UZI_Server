@@ -1,6 +1,7 @@
 import express from "express";
 
 import {
+  deleteUser,
   emailVerifivcation,
   getProfile,
   getTranx,
@@ -13,6 +14,7 @@ import {
 const router = express.Router();
 
 router.post("/register", register);
+router.delete("/deleteUser/:userName", deleteUser);
 router.post("/verifyUser", verifyUser);
 router.post("/login", loginUser);
 router.post("/emailVerification", emailVerifivcation);

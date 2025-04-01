@@ -103,6 +103,8 @@ const getToken = async (body) =>
     expiresIn: process.env.JWT_EXPIRY || "1h",
   });
 
+const deleteOne = async (userName) => Users.deleteOne({ userName });
+
 const getOtpCode = () =>
   Math.floor(Math.random() * (9 * Math.pow(10, 4 - 1))) + Math.pow(10, 4 - 1);
 
@@ -113,4 +115,5 @@ export {
   login,
   verifyEmail,
   updatePasswordService,
+  deleteOne,
 };

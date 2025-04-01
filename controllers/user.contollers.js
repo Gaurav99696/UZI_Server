@@ -6,6 +6,7 @@ import {
   login,
   verifyEmail,
   updatePasswordService,
+  deleteOne,
 } from "../servises/user.servise.js";
 import {
   createVerificationEmail,
@@ -160,6 +161,20 @@ const getProfile = async (req, res) => {
   }
 };
 
+// deleting a user
+const deleteUser = async (req, res) => {
+  const data = req.params;
+  try {
+    const deleted = await deleteOne(data.userName);
+    if (!deleteOne)
+      return res.status(400).send({ message: "Cannot delelte !!" });
+
+    return res.status(200).send({ message: "Success" });
+  } catch (error) {
+    return res.status(500).send("An unexpected error occurred");
+  }
+};
+
 // Get the user Tranx Details
 const getTranx = async (req, res) => {
   const { userName } = req.params;
@@ -186,4 +201,5 @@ export {
   verifyUser,
   updatePassword,
   emailVerifivcation,
+  deleteUser,
 };
