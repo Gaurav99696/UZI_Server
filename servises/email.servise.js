@@ -1,32 +1,30 @@
-import nodemailer from "nodemailer";
+import { Resend } from "resend";
+import dotenv from "dotenv";
+
+dotenv.config();
+
+const resend = new Resend(process.env.API_KEY);
 
 const createVerificationEmail = (receiverEmail, OTP) => {
-  const email = {
-    from: '"UZI" <gauravmishra99696@gmail.com>',
+  return {
+    from: "UZI <onboarding@resend.dev>",
     to: receiverEmail,
     subject: "Email Verification",
-    text: "This is a verification Email from Scot.",
-    html: `<h3>Your OTP for verification is ${OTP.OTP}. Valid for 10 minutes.</h3>`,
+    html: `<h3>Your OTP for verification is <b>${OTP.OTP}</b>. Valid for 10 minutes.</h3>`,
   };
-  return email;
 };
 
-const sendMail = async (email) => {
+const sendMail = async (emailData) => {
   try {
-    const transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: "uzi.v12025@gmail.com",
-        pass: "anpz bkpn zdyg dgck",
-      },
-    });
-    return transporter.sendMail(email, (err) => {
-      if (err) {
-        console.log(err);
-      }
-    });
+    const { error } = await resend.emails.send(emailData);
+    if (error) {
+      console.error("Error sending email:", error);
+      return false;
+    }
+    return true;
   } catch (error) {
-    console.error("Error sending email:", error);
+    console.error("Email sending failed:", error);
+    return false;
   }
 };
 
